@@ -2,6 +2,8 @@
 /*
 
 */
+// eg url: http://localhost:9193/?action=imgproxy&imgname=http://hyperallergic.com/wp-content/uploads/2015/07/jesusmarymet02.jpg&width=500
+
 
 
 var async = require("async");
@@ -103,8 +105,14 @@ function imgproxy(imgname, width, height, query, res){
       path: path
   };
 
-  var gm = require('gm');
+  var graphicsmagic = require('gm');
 
+  var gm;
+  if(process.env.GRAPHICS != "GRAPHICSMAGICK"){
+    gm = graphicsmagic.subClass({ imageMagick: true });
+  }else{
+    gm = graphicsmagic;
+  }
 /*
   res.writeHead(404, {'Content-Type': contentType, 
                   'Access-Control-Allow-Origin' : '*'});
