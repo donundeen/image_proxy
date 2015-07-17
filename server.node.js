@@ -14,11 +14,7 @@ var fs = require("fs");
 var pathparser = require("path");
 var http = require("http");
 
-var mysecrets = {port: 9193};
-
-if(process.env.IS_DEV != "TRUE"){
-  mysecrets.port = 80;
-}
+var mysecrets = {port: (process.env.PORT || 5000)};
 
 var port = mysecrets.port;
 if(process && process.env && process.env.NODE_ENV == "production"){
