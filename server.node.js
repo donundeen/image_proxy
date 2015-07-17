@@ -16,6 +16,9 @@ var http = require("http");
 
 var mysecrets = {port: 9193};
 
+if(process.env.IS_DEV != "TRUE"){
+  mysecrets.port = 80;
+}
 
 var port = mysecrets.port;
 if(process && process.env && process.env.NODE_ENV == "production"){
