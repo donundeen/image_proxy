@@ -24,7 +24,8 @@ var urlparser = require("url");
 
 var fs = require("fs");
 var pathparser = require("path");
-var http = require("http");
+var http = require('follow-redirects').http;
+
 
 var mysecrets = {port: (process.env.IMAGE_PROXY_PORT || 5000)};
 
@@ -45,7 +46,7 @@ function startServer(){
     return;
   }
     
-  var http = require('http');
+  var http = require('follow-redirects').http;
   http.createServer(function (req, res) {
     parseRequest(req, res);
 
