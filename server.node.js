@@ -138,19 +138,34 @@ function imgproxy(imgname, width, height, query, res){
             res.writeHead(200, {
 		'Content-Type': response.headers['content-type'], 
                 'Access-Control-Allow-Origin' : '*'});
-            gm(response)
-		.resize(parseInt(width))
-		.autoOrient()
-		.stream(function(err, stdout, stderr){
-		    if(err){
-			console.log("error in resizing");
-			console.log(err);
-			res.end();
-		    }else{
-			console.log("resize ok");
-			stdout.pipe(res);
-		    }
-		});
+	    if(width != "default"){
+		gm(response)
+		    .autoOrient()
+		    .stream(function(err, stdout, stderr){
+			if(err){
+			    console.log("error in resizing");
+			    console.log(err);
+			    res.end();
+			}else{
+			    console.log("resize ok");
+			    stdout.pipe(res);
+			}
+		    });
+	    }else{
+		gm(response)
+                    .resize(parseInt(width))
+                    .autoOrient()
+                    .stream(function(err, stdout, stderr){
+			if(err){
+                            console.log("error in resizing");
+                            console.log(err);
+                            res.end();
+			}else{
+                            console.log("resize ok");
+                            stdout.pipe(res);
+			}
+                    });
+	    }
 	}else{
             console.log("bad responde " + response.statusCode);
             res.writeHead(response.statusCode, {"Content-Type": "text/html"});
